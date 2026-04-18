@@ -54,13 +54,11 @@
   }
   .slide.active { opacity: 1; pointer-events: all; }
 
-  /* SLIDE 0 — INTRO */
   #slide-0 {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center; padding: 40px 24px;
-    background: var(--bg);
-    overflow: hidden;
+    background: var(--bg); overflow: hidden;
   }
   #slide-0::before {
     content: '';
@@ -85,8 +83,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(28px, 6vw, 64px);
     font-weight: 300; letter-spacing: 0.12em;
-    color: var(--warm-white);
-    line-height: 1.1;
+    color: var(--warm-white); line-height: 1.1;
     animation: fadeUp 0.9s 0.6s ease both;
   }
   .intro-name span { color: var(--coral); font-style: italic; }
@@ -139,20 +136,15 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* IMAGE SLIDES */
   .img-slide {
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 100vh;
   }
-  .img-slide .visual {
-    position: relative; overflow: hidden;
-  }
+  .img-slide .visual { position: relative; overflow: hidden; }
   .img-slide .visual img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 8s ease;
-    transform: scale(1.06);
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 8s ease; transform: scale(1.06);
   }
   .slide.active .img-slide .visual img { transform: scale(1); }
 
@@ -197,7 +189,6 @@
     background: var(--coral);
   }
 
-  /* full-bleed slide */
   .full-slide {
     position: relative; overflow: hidden;
     display: flex; align-items: flex-end; justify-content: flex-start;
@@ -213,11 +204,8 @@
     position: absolute; inset: 0;
     background: linear-gradient(120deg, rgba(40,38,41,0.72) 0%, rgba(40,38,41,0.15) 60%, transparent 100%);
   }
-  .full-slide .overlay-text {
-    position: relative; z-index: 2; max-width: 480px;
-  }
+  .full-slide .overlay-text { position: relative; z-index: 2; max-width: 480px; }
 
-  /* grid slide */
   .grid-slide {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -225,9 +213,7 @@
     gap: 3px; height: 100vh;
     background: var(--bg);
   }
-  .grid-slide .cell {
-    position: relative; overflow: hidden;
-  }
+  .grid-slide .cell { position: relative; overflow: hidden; }
   .grid-slide .cell img {
     width: 100%; height: 100%; object-fit: cover;
     transition: transform 0.5s ease;
@@ -241,7 +227,6 @@
     backdrop-filter: blur(6px);
   }
 
-  /* CONTACT SLIDE */
   #slide-contact {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -266,23 +251,14 @@
     text-transform: uppercase; color: var(--muted);
     margin-bottom: 52px;
   }
-  .contact-links {
-    display: flex; flex-direction: column; gap: 24px;
-    align-items: center;
-  }
-  .contact-item {
-    display: flex; align-items: center; gap: 14px;
-  }
-  .contact-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--coral); flex-shrink: 0;
-  }
+  .contact-links { display: flex; flex-direction: column; gap: 24px; align-items: center; }
+  .contact-item { display: flex; align-items: center; gap: 14px; }
+  .contact-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); flex-shrink: 0; }
   .contact-text {
     font-size: clamp(14px, 2.5vw, 20px);
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300; color: var(--warm-white);
-    letter-spacing: 0.05em;
-    text-decoration: none;
+    letter-spacing: 0.05em; text-decoration: none;
     transition: color 0.3s;
   }
   .contact-text:hover { color: var(--coral); }
@@ -293,7 +269,6 @@
     text-transform: uppercase; color: rgba(245,237,232,0.25);
   }
 
-  /* NAV */
   .nav {
     position: fixed; bottom: 36px; left: 50%;
     transform: translateX(-50%);
@@ -306,10 +281,7 @@
     background: transparent; cursor: none;
     transition: background 0.3s, border-color 0.3s, transform 0.3s;
   }
-  .nav-dot.active {
-    background: var(--coral); border-color: var(--coral);
-    transform: scale(1.4);
-  }
+  .nav-dot.active { background: var(--coral); border-color: var(--coral); transform: scale(1.4); }
 
   .arrow {
     position: fixed; top: 50%; transform: translateY(-50%);
@@ -351,35 +323,19 @@
   }
   @keyframes pulse { 0%,100%{opacity:0.2} 50%{opacity:0.55} }
 
-  /* MOBILE */
   @media (max-width: 700px) {
     html, body { cursor: auto; }
     .cursor, .cursor-ring { display: none; }
-
-    .img-slide {
-      grid-template-columns: 1fr;
-      grid-template-rows: 55vh 1fr;
-    }
+    .img-slide { grid-template-columns: 1fr; grid-template-rows: 55vh 1fr; }
     .img-slide .visual { height: 100%; }
-    .img-slide .caption-panel {
-      padding: 28px 24px 60px;
-      justify-content: flex-start;
-    }
+    .img-slide .caption-panel { padding: 28px 24px 60px; justify-content: flex-start; }
     .slide-num { font-size: 48px; margin-bottom: 8px; }
-
     .full-slide { padding: 28px 24px 72px; align-items: flex-end; }
-
-    .grid-slide {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-    }
-
     .arrow { width: 36px; height: 36px; font-size: 14px; }
     .arrow-prev { left: 8px; }
     .arrow-next { right: 8px; }
     .brand-badge { font-size: 10px; }
     .slide-counter { font-size: 10px; top: 20px; right: 16px; }
-
     #slide-0, #slide-contact { padding: 56px 24px 80px; }
   }
 </style>
@@ -413,7 +369,7 @@
   <!-- SLIDE 1: NOYA Interior — full bleed -->
   <div class="slide" id="slide-1">
     <div class="full-slide">
-      <img src="IMG_7667_copy.jpg" alt="Noya Restaurant Interior">
+      <img src="IMG_7667 copy.jpg" alt="Noya Restaurant Interior">
       <div class="overlay-text">
         <div class="slide-category">Atmosphere &amp; Brand</div>
         <div class="slide-title" style="color:var(--warm-white);font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,58px);font-weight:300;line-height:1.15;">
@@ -429,7 +385,7 @@
   <div class="slide" id="slide-2">
     <div class="img-slide">
       <div class="visual">
-        <img src="IMG_7666_copy.jpg" alt="Friends at restaurant">
+        <img src="IMG_7666 copy.jpg" alt="Friends at restaurant">
       </div>
       <div class="caption-panel">
         <div class="slide-num">02</div>
@@ -444,7 +400,7 @@
   <!-- SLIDE 3: Pizza — full bleed -->
   <div class="slide" id="slide-3">
     <div class="full-slide">
-      <img src="IMG_7973_copy_2.jpg" alt="Pizza">
+      <img src="IMG_7973 copy 2.jpg" alt="Pizza">
       <div class="overlay-text">
         <div class="slide-category">Campaign Content</div>
         <div class="slide-title" style="color:var(--warm-white);font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,58px);font-weight:300;line-height:1.15;">
@@ -460,19 +416,19 @@
   <div class="slide" id="slide-4">
     <div class="grid-slide">
       <div class="cell">
-        <img src="IMG_7993_copy.jpg" alt="Purple mojito cocktail">
+        <img src="IMG_7993 copy.jpg" alt="Purple mojito cocktail">
         <div class="cell-label">Signature Drinks</div>
       </div>
       <div class="cell">
-        <img src="IMG-6770_copy.jpg" alt="Green mint drink">
+        <img src="IMG-6770 copy.jpg" alt="Green mint drink">
         <div class="cell-label">Fresh &amp; Vibrant</div>
       </div>
       <div class="cell">
-        <img src="IMG_7662_copy.jpg" alt="Food experience">
+        <img src="IMG_7662 copy.jpg" alt="Food experience">
         <div class="cell-label">The Experience</div>
       </div>
       <div class="cell">
-        <img src="IMG_7680_copy.jpg" alt="Lifestyle moment">
+        <img src="IMG_7680 copy.jpg" alt="Lifestyle moment">
         <div class="cell-label">Lifestyle</div>
       </div>
     </div>
@@ -482,7 +438,7 @@
   <div class="slide" id="slide-5">
     <div class="img-slide">
       <div class="visual">
-        <img src="IMG_7974_copy_2.jpg" alt="Chicken burger and fries">
+        <img src="IMG_7974 copy 2.jpg" alt="Chicken burger and fries">
       </div>
       <div class="caption-panel">
         <div class="slide-num">05</div>
@@ -494,10 +450,10 @@
     </div>
   </div>
 
-  <!-- SLIDE 6: Desserts full bleed -->
+  <!-- SLIDE 6: Desserts — full bleed -->
   <div class="slide" id="slide-6">
     <div class="full-slide">
-      <img src="IMG-6796_copy.jpg" alt="Berry tart dessert">
+      <img src="IMG-6796 copy.jpg" alt="Berry tart dessert">
       <div class="overlay-text">
         <div class="slide-category">Pastry &amp; Desserts</div>
         <div class="slide-title" style="color:var(--warm-white);font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,58px);font-weight:300;line-height:1.15;">
@@ -509,7 +465,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 7: Salads / spread — split -->
+  <!-- SLIDE 7: Spread — split -->
   <div class="slide" id="slide-7">
     <div class="img-slide" style="direction:ltr;">
       <div class="caption-panel">
@@ -520,7 +476,7 @@
         <div class="slide-accent"></div>
       </div>
       <div class="visual">
-        <img src="IMG-6782_copy.jpg" alt="Food spread">
+        <img src="IMG-6782 copy.jpg" alt="Food spread">
       </div>
     </div>
   </div>
@@ -550,7 +506,6 @@
 
 </div>
 
-<!-- Navigation -->
 <div class="nav" id="nav"></div>
 <div class="arrow arrow-prev" id="arrowPrev">&#8592;</div>
 <div class="arrow arrow-next" id="arrowNext">&#8594;</div>
