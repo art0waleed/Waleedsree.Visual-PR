@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waleed sree Visual PR</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #282629;
+    --coral: #FFAA9E;
+    --warm-white: #F5EDE8;
+    --muted: rgba(245,237,232,0.45);
+    --glass: rgba(255,170,158,0.08);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--warm-white);
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed; width: 10px; height: 10px;
+    background: var(--coral); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid var(--coral); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    transition: all 0.25s ease;
+  }
+
+  .slides-container {
+    width: 100vw; height: 100vh;
+    position: relative; overflow: hidden;
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1);
+  }
+  .slide.active { opacity: 1; pointer-events: all; }
+
+  /* SLIDE 0 — INTRO */
+  #slide-0 {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 40px 24px;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  #slide-0::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(255,170,158,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .intro-grain {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35; pointer-events: none;
+  }
+  .intro-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--coral));
+    margin-bottom: 32px;
+    animation: growLine 1.2s 0.3s ease both;
+  }
+  @keyframes growLine { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+
+  .intro-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 6vw, 64px);
+    font-weight: 300; letter-spacing: 0.12em;
+    color: var(--warm-white);
+    line-height: 1.1;
+    animation: fadeUp 0.9s 0.6s ease both;
+  }
+  .intro-name span { color: var(--coral); font-style: italic; }
+
+  .intro-sub {
+    margin-top: 10px;
+    font-size: clamp(10px, 1.6vw, 13px);
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--muted);
+    animation: fadeUp 0.9s 0.85s ease both;
+  }
+
+  .intro-divider {
+    width: 40px; height: 1px;
+    background: var(--coral); margin: 36px 0;
+    animation: fadeUp 0.9s 1.05s ease both;
+  }
+
+  .intro-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 5vw, 52px);
+    font-weight: 300; font-style: italic;
+    color: var(--coral); line-height: 1.2;
+    max-width: 700px;
+    animation: fadeUp 0.9s 1.2s ease both;
+  }
+
+  .intro-body {
+    margin-top: 28px;
+    font-size: clamp(12px, 1.8vw, 15px);
+    font-weight: 300; line-height: 1.85;
+    color: var(--muted); max-width: 560px;
+    animation: fadeUp 0.9s 1.4s ease both;
+  }
+
+  .intro-cta {
+    margin-top: 44px;
+    display: inline-block; padding: 14px 38px;
+    border: 1px solid var(--coral);
+    color: var(--coral); font-size: 11px;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    background: transparent; cursor: none;
+    transition: background 0.3s, color 0.3s;
+    animation: fadeUp 0.9s 1.6s ease both;
+  }
+  .intro-cta:hover { background: var(--coral); color: var(--bg); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* IMAGE SLIDES */
+  .img-slide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+  }
+  .img-slide .visual {
+    position: relative; overflow: hidden;
+  }
+  .img-slide .visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 8s ease;
+    transform: scale(1.06);
+  }
+  .slide.active .img-slide .visual img { transform: scale(1); }
+
+  .img-slide .caption-panel {
+    display: flex; flex-direction: column;
+    justify-content: center; padding: clamp(32px, 6vw, 80px);
+    background: var(--bg); position: relative; overflow: hidden;
+  }
+  .img-slide .caption-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 0% 100%, rgba(255,170,158,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .slide-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 9vw, 110px);
+    font-weight: 300; color: rgba(255,170,158,0.10);
+    line-height: 1; margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .slide-category {
+    font-size: 10px; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--coral);
+    margin-bottom: 16px;
+  }
+  .slide-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 4vw, 52px);
+    font-weight: 300; line-height: 1.15;
+    color: var(--warm-white); margin-bottom: 24px;
+  }
+  .slide-title em { font-style: italic; color: var(--coral); }
+  .slide-desc {
+    font-size: clamp(12px, 1.5vw, 14px);
+    font-weight: 300; line-height: 1.85;
+    color: var(--muted); max-width: 380px;
+  }
+  .slide-accent {
+    margin-top: 40px; width: 32px; height: 1px;
+    background: var(--coral);
+  }
+
+  /* full-bleed slide */
+  .full-slide {
+    position: relative; overflow: hidden;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    padding: clamp(28px,6vw,80px);
+  }
+  .full-slide img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; transition: transform 8s ease; transform: scale(1.05);
+  }
+  .slide.active .full-slide img { transform: scale(1); }
+  .full-slide::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(120deg, rgba(40,38,41,0.72) 0%, rgba(40,38,41,0.15) 60%, transparent 100%);
+  }
+  .full-slide .overlay-text {
+    position: relative; z-index: 2; max-width: 480px;
+  }
+
+  /* grid slide */
+  .grid-slide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px; height: 100vh;
+    background: var(--bg);
+  }
+  .grid-slide .cell {
+    position: relative; overflow: hidden;
+  }
+  .grid-slide .cell img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .grid-slide .cell:hover img { transform: scale(1.04); }
+  .grid-slide .cell-label {
+    position: absolute; bottom: 16px; left: 16px;
+    font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--warm-white);
+    background: rgba(40,38,41,0.55); padding: 5px 12px;
+    backdrop-filter: blur(6px);
+  }
+
+  /* CONTACT SLIDE */
+  #slide-contact {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 40px 24px;
+    background: var(--bg); overflow: hidden;
+  }
+  #slide-contact::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(255,170,158,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 7vw, 80px);
+    font-weight: 300; color: var(--warm-white);
+    line-height: 1.05; margin-bottom: 12px;
+  }
+  .contact-title em { font-style: italic; color: var(--coral); }
+  .contact-sub {
+    font-size: 11px; letter-spacing: 0.38em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 52px;
+  }
+  .contact-links {
+    display: flex; flex-direction: column; gap: 24px;
+    align-items: center;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .contact-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--coral); flex-shrink: 0;
+  }
+  .contact-text {
+    font-size: clamp(14px, 2.5vw, 20px);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; color: var(--warm-white);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-text:hover { color: var(--coral); }
+  .contact-divider { width: 1px; height: 40px; background: rgba(255,170,158,0.3); margin: 8px 0; }
+  .contact-footer {
+    margin-top: 56px;
+    font-size: 10px; letter-spacing: 0.35em;
+    text-transform: uppercase; color: rgba(245,237,232,0.25);
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed; bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; gap: 10px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    border: 1px solid rgba(255,170,158,0.5);
+    background: transparent; cursor: none;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  }
+  .nav-dot.active {
+    background: var(--coral); border-color: var(--coral);
+    transform: scale(1.4);
+  }
+
+  .arrow {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    background: var(--glass); border: 1px solid rgba(255,170,158,0.2);
+    color: var(--coral); width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: none; z-index: 100;
+    backdrop-filter: blur(8px);
+    transition: background 0.3s, border-color 0.3s;
+    font-size: 18px; user-select: none;
+  }
+  .arrow:hover { background: rgba(255,170,158,0.18); border-color: var(--coral); }
+  .arrow-prev { left: 20px; }
+  .arrow-next { right: 20px; }
+
+  .slide-counter {
+    position: fixed; top: 28px; right: 28px;
+    font-size: 11px; letter-spacing: 0.22em;
+    color: var(--muted); z-index: 100;
+  }
+  .slide-counter span { color: var(--coral); }
+
+  .brand-badge {
+    position: fixed; top: 28px; left: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--warm-white);
+    z-index: 100; font-weight: 300;
+  }
+  .brand-badge em { color: var(--coral); font-style: normal; }
+
+  .swipe-hint {
+    position: fixed; bottom: 72px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px; letter-spacing: 0.35em;
+    text-transform: uppercase; color: rgba(245,237,232,0.2);
+    z-index: 100;
+    animation: pulse 2.5s 3s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.2} 50%{opacity:0.55} }
+
+  /* MOBILE */
+  @media (max-width: 700px) {
+    html, body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+
+    .img-slide {
+      grid-template-columns: 1fr;
+      grid-template-rows: 55vh 1fr;
+    }
+    .img-slide .visual { height: 100%; }
+    .img-slide .caption-panel {
+      padding: 28px 24px 60px;
+      justify-content: flex-start;
+    }
+    .slide-num { font-size: 48px; margin-bottom: 8px; }
+
+    .full-slide { padding: 28px 24px 72px; align-items: flex-end; }
+
+    .grid-slide {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .arrow { width: 36px; height: 36px; font-size: 14px; }
+    .arrow-prev { left: 8px; }
+    .arrow-next { right: 8px; }
+    .brand-badge { font-size: 10px; }
+    .slide-counter { font-size: 10px; top: 20px; right: 16px; }
+
+    #slide-0, #slide-contact { padding: 56px 24px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="brand-badge"><em>W</em>aleed sree Visual PR</div>
+<div class="slide-counter"><span id="cur">01</span> / <span id="tot">09</span></div>
+<div class="swipe-hint">Swipe or use arrows</div>
+
+<div class="slides-container" id="slidesContainer">
+
+  <!-- SLIDE 0: INTRO -->
+  <div class="slide active" id="slide-0">
+    <div class="intro-grain"></div>
+    <div class="intro-line"></div>
+    <div class="intro-name">Waleed sree<br><span>Visual PR</span></div>
+    <div class="intro-sub">Food &amp; Beverage · Cinematic Content</div>
+    <div class="intro-divider"></div>
+    <div class="intro-tagline">"I don't just shoot…<br>I bring customers"</div>
+    <div class="intro-body">
+      Hi, I'm a food &amp; beverage visual creator specializing in cinematic luxury content. I help cafes and restaurants create content that not only looks good — but attracts customers and builds a strong brand identity.<br><br>
+      I'd love to create a premium content set for your brand.
+    </div>
+    <button class="intro-cta" onclick="goTo(1)">View Portfolio</button>
+  </div>
+
+  <!-- SLIDE 1: NOYA Interior — full bleed -->
+  <div class="slide" id="slide-1">
+    <div class="full-slide">
+      <img src="IMG_7667_copy.jpg" alt="Noya Restaurant Interior">
+      <div class="overlay-text">
+        <div class="slide-category">Atmosphere &amp; Brand</div>
+        <div class="slide-title" style="color:var(--warm-white);font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,58px);font-weight:300;line-height:1.15;">
+          Spaces that<br><em>tell a story</em>
+        </div>
+        <div class="slide-accent"></div>
+        <div class="slide-desc" style="margin-top:20px;">Cinematic interior photography that communicates the soul of your brand before a single dish arrives.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Friends toasting — split -->
+  <div class="slide" id="slide-2">
+    <div class="img-slide">
+      <div class="visual">
+        <img src="IMG_7666_copy.jpg" alt="Friends at restaurant">
+      </div>
+      <div class="caption-panel">
+        <div class="slide-num">02</div>
+        <div class="slide-category">Lifestyle &amp; Emotion</div>
+        <div class="slide-title">Creating <em>moments</em><br>people want to live</div>
+        <div class="slide-desc">Authentic lifestyle photography that makes your audience feel the experience — and want to be there.</div>
+        <div class="slide-accent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Pizza — full bleed -->
+  <div class="slide" id="slide-3">
+    <div class="full-slide">
+      <img src="IMG_7973_copy_2.jpg" alt="Pizza">
+      <div class="overlay-text">
+        <div class="slide-category">Campaign Content</div>
+        <div class="slide-title" style="color:var(--warm-white);font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,58px);font-weight:300;line-height:1.15;">
+          Bold.<br><em>Unapologetic.</em>
+        </div>
+        <div class="slide-accent"></div>
+        <div class="slide-desc" style="margin-top:20px;">Every shot is designed to stop the scroll and convert viewers into customers.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Drinks grid -->
+  <div class="slide" id="slide-4">
+    <div class="grid-slide">
+      <div class="cell">
+        <img src="IMG_7993_copy.jpg" alt="Purple mojito cocktail">
+        <div class="cell-label">Signature Drinks</div>
+      </div>
+      <div class="cell">
+        <img src="IMG-6770_copy.jpg" alt="Green mint drink">
+        <div class="cell-label">Fresh &amp; Vibrant</div>
+      </div>
+      <div class="cell">
+        <img src="IMG_7662_copy.jpg" alt="Food experience">
+        <div class="cell-label">The Experience</div>
+      </div>
+      <div class="cell">
+        <img src="IMG_7680_copy.jpg" alt="Lifestyle moment">
+        <div class="cell-label">Lifestyle</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Burger — split -->
+  <div class="slide" id="slide-5">
+    <div class="img-slide">
+      <div class="visual">
+        <img src="IMG_7974_copy_2.jpg" alt="Chicken burger and fries">
+      </div>
+      <div class="caption-panel">
+        <div class="slide-num">05</div>
+        <div class="slide-category">Food Photography</div>
+        <div class="slide-title">Every bite<br><em>deserves</em><br>the spotlight</div>
+        <div class="slide-desc">Precision food styling and lighting that makes your menu irresistible — turning images into orders.</div>
+        <div class="slide-accent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Desserts full bleed -->
+  <div class="slide" id="slide-6">
+    <div class="full-slide">
+      <img src="IMG-6796_copy.jpg" alt="Berry tart dessert">
+      <div class="overlay-text">
+        <div class="slide-category">Pastry &amp; Desserts</div>
+        <div class="slide-title" style="color:var(--warm-white);font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,58px);font-weight:300;line-height:1.15;">
+          <em>Luxury</em><br>in every detail
+        </div>
+        <div class="slide-accent"></div>
+        <div class="slide-desc" style="margin-top:20px;">From delicate tarts to stacked cookies — plated perfection captured for maximum desire.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Salads / spread — split -->
+  <div class="slide" id="slide-7">
+    <div class="img-slide" style="direction:ltr;">
+      <div class="caption-panel">
+        <div class="slide-num">07</div>
+        <div class="slide-category">Full Table &amp; Spreads</div>
+        <div class="slide-title"><em>Rich heritage,</em><br>elevated<br>visual identity</div>
+        <div class="slide-desc">Vibrant salads, soups, and spreads — every dish photographed to showcase the full depth of your offering.</div>
+        <div class="slide-accent"></div>
+      </div>
+      <div class="visual">
+        <img src="IMG-6782_copy.jpg" alt="Food spread">
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: CONTACT -->
+  <div class="slide" id="slide-contact">
+    <div class="intro-grain"></div>
+    <div class="contact-title">Let's build your<br><em>brand together</em></div>
+    <div class="contact-sub">Get in touch · Book a session</div>
+    <div class="contact-links">
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <a class="contact-text" href="https://www.instagram.com/waleedphoto0/" target="_blank">@waleedphoto0</a>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <a class="contact-text" href="tel:01128182515">011 2818 2515</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <a class="contact-text" href="tel:01270191039">012 7019 1039</a>
+      </div>
+    </div>
+    <div class="contact-footer">Waleed sree Visual PR · Food &amp; Beverage Cinematic Content</div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav" id="nav"></div>
+<div class="arrow arrow-prev" id="arrowPrev">&#8592;</div>
+<div class="arrow arrow-next" id="arrowNext">&#8594;</div>
+
+<script>
+  const totalSlides = 9;
+  let current = 0;
+  let isTransitioning = false;
+  let touchStartX = 0;
+
+  const slides = document.querySelectorAll('.slide');
+  const nav = document.getElementById('nav');
+  const curEl = document.getElementById('cur');
+  const totEl = document.getElementById('tot');
+  totEl.textContent = String(totalSlides).padStart(2,'0');
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'nav-dot' + (i===0?' active':'');
+    d.addEventListener('click', () => goTo(i));
+    nav.appendChild(d);
+  });
+
+  function goTo(idx) {
+    if (isTransitioning || idx === current) return;
+    isTransitioning = true;
+    slides[current].classList.remove('active');
+    nav.children[current].classList.remove('active');
+    current = (idx + totalSlides) % totalSlides;
+    slides[current].classList.add('active');
+    nav.children[current].classList.add('active');
+    curEl.textContent = String(current+1).padStart(2,'0');
+    setTimeout(() => { isTransitioning = false; }, 950);
+  }
+
+  window.goTo = goTo;
+
+  document.getElementById('arrowPrev').addEventListener('click', () => goTo(current-1));
+  document.getElementById('arrowNext').addEventListener('click', () => goTo(current+1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') goTo(current+1);
+    if (e.key==='ArrowLeft'||e.key==='ArrowUp')  goTo(current-1);
+  });
+
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) goTo(dx < 0 ? current+1 : current-1);
+  }, {passive:true});
+
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let rx=0,ry=0;
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px';
+    rx += (e.clientX - rx) * 0.12; ry += (e.clientY - ry) * 0.12;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  });
+  function animRing(){
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  let lastWheel = 0;
+  document.addEventListener('wheel', e => {
+    const now = Date.now();
+    if (now - lastWheel < 800) return;
+    lastWheel = now;
+    goTo(e.deltaY > 0 ? current+1 : current-1);
+  }, {passive:true});
+</script>
+</body>
+</html>
